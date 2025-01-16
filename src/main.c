@@ -1,4 +1,5 @@
 
+#include <hardware/gpio.h>
 #include <stdint.h>
 #include <stdio.h>
 #include "pico/stdlib.h"
@@ -14,7 +15,15 @@
 #define PIN_SCK 6
 #define PIN_MOSI 7
 
+#define LED_PIN 25
 
+void blink() {
+    gpio_put(LED_PIN, 0);
+    sleep_ms(200);
+    gpio_put(LED_PIN, 1);
+    sleep_ms(200);
+    gpio_put(LED_PIN, 0);
+}
 
 int main(){
     stdio_init_all();
@@ -24,6 +33,9 @@ int main(){
     gpio_set_function(PIN_MISO, GPIO_FUNC_SPI);
     gpio_set_function(PIN_SCK, GPIO_FUNC_SPI);
     gpio_set_function(PIN_MOSI, GPIO_FUNC_SPI);
+
+    gpio_init(LED_PIN);
+    gpio_set_dir(LED_PIN, GPIO_OUT);
 
     // Chip select is active-low, so we'll initialise it to a driven-high state
     gpio_init(PIN_CS_A);
@@ -64,12 +76,20 @@ int main(){
 
     int64_t delay;
 
+    blink();
+    blink();
+    blink();
+    blink();
+
     while (1)
     {
+        gpio_put(LED_PIN, 1);
         sleep_ms(500);
         timeStart1 = get_absolute_time();
         mcp2515_sendMessageBlocking(&canA, &transmitBuffer);
         printf("Sent Message: %i", (*(uint32_t*)transmitBuffer.data));
+
+        gpio_put(LED_PIN, 0);
         mcp2515_recieveMessageBlocking(&canA, &recieveBuffer);
 
         // delay = (delay + absolute_time_diff_us(timeStart1, get_absolute_time())) / 2;
