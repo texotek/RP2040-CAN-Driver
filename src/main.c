@@ -1,4 +1,5 @@
 
+#include <stdint.h>
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "pico/time.h"
@@ -36,7 +37,7 @@ int main(){
     Mcp2515 canA;
     mcp2515_init(&canA, PIN_CS_A, CAN_BAUDRATE, SPI_PORT);
     // Controller is in listen-only mode after initialization.
-    mcp2515_setOpmode(&canA, LOOPBACK_MODE);
+    mcp2515_setOpmode(&canA, NORMAL_MODE);
     
 
     // Speedtest
@@ -87,6 +88,7 @@ int main(){
         }
         (*(uint32_t*)transmitBuffer.data) ++;
         transmittedMessages++;
+        printf("Messages %i\n", (*(uint32_t*)transmitBuffer.data) % 255);
     }
 
     return 0;

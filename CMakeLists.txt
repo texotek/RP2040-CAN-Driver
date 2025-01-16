@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.12)
 
+set(PICO_BOARD pico)
 # initalize pico_sdk from installed location
 # (note this can come from environment, CMake cache etc)
-set(PICO_SDK_PATH "/usr/share/pico-sdk")
+set(PICO_SDK_PATH "")
 
 # Pull in SDK (must be before project)
 include(pico_sdk_import.cmake)
@@ -14,7 +15,6 @@ project(${ProjectId}  C CXX)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
-
 
 #set(PICO_EXAMPLES_PATH ${PROJECT_SOURCE_DIR})
 
