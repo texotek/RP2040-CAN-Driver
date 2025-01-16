@@ -26,7 +26,17 @@ Sent Message: 401 Received Message: 407
 You will need 2 RP-Pico base on the RP2040 Chip and 2 MCP2515 to complete this example.
 Now connect the 2 MCP2515 via CAN Low and CAN High to make them speak to each others.
 
+![Logic Analyzer image](./img/logicanalyzer.jpg)
+
+Here the logic analyzer output is diplayed. The CAN Packets are displayed here.
+NOTE: The can_error message only appear because logic analyzer interprets them as such because the CAN protocol defines 5 bits sequentially send as high as an error.
+
 ## Building the driver
+
+To build the driver you will need the `PICO_SDK_PATH` variable set that points to the installed pico sdk.
+
+And you will need `cmake`, `make`, `arm-gcc-noabi`.
+
 ```
 git clone https://github.com/texotek/RP2040-CAN-Driver
 cd RP2040-CAN-Driver
