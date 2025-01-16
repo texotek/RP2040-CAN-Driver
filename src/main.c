@@ -66,29 +66,34 @@ int main(){
 
     while (1)
     {
+        sleep_ms(500);
         timeStart1 = get_absolute_time();
         mcp2515_sendMessageBlocking(&canA, &transmitBuffer);
+        printf("Sent Message: %i", (*(uint32_t*)transmitBuffer.data));
         mcp2515_recieveMessageBlocking(&canA, &recieveBuffer);
-        delay = (delay + absolute_time_diff_us(timeStart1, get_absolute_time())) / 2;
-        if (*(uint32_t*)transmitBuffer.data != *(uint32_t*)recieveBuffer.data) {
-            if (!transmitBuffer.isRTR) errors++;
-        }
-        if (transmitBuffer.standardId != recieveBuffer.standardId) {
-            errors++;
-        }
-        if (transmitBuffer.length != recieveBuffer.length) {
-            errors++;
-        }
-        if (absolute_time_diff_us(timeStart, get_absolute_time()) > 1000000) {
-            timeStart = get_absolute_time();
-            printf("%d Kbyte/s    ", (transmittedMessages*8)/1000);
-            transmittedMessages = 0;
-            printf("Errors %d    ", errors);
-            printf("Delay %d us\n", (uint32_t)delay);
-        }
+
+        // delay = (delay + absolute_time_diff_us(timeStart1, get_absolute_time())) / 2;
+        // if (*(uint32_t*)transmitBuffer.data != *(uint32_t*)recieveBuffer.data) {
+        //     if (!transmitBuffer.isRTR) errors++;
+        // }
+        // if (transmitBuffer.standardId != recieveBuffer.standardId) {
+        //     errors++;
+        // }
+        // if (transmitBuffer.length != recieveBuffer.length) {
+        //     errors++;
+        // }
+        // if (absolute_time_diff_us(timeStart, get_absolute_time()) > 1000000) {
+        //     timeStart = get_absolute_time();
+        //     printf("%d Kbyte/s    ", (transmittedMessages*8)/1000);
+        //     transmittedMessages = 0;
+        //     printf("Errors %d    ", errors);
+        //     printf("Delay %d us\n", (uint32_t)delay);
+        // }
         (*(uint32_t*)transmitBuffer.data) ++;
         transmittedMessages++;
-        printf("Messages %i\n", (*(uint32_t*)transmitBuffer.data) % 255);
+        printf(" Received Message: %i\n", (*(uint32_t*)recieveBuffer.data));
+
+        sleep_ms(500);
     }
 
     return 0;
