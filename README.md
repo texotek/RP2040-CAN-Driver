@@ -4,6 +4,11 @@ A driver to run the MCP2515.
 This driver was modified for the SYT Class TGM 24/25.
 The drivers `main.c` example now sends and receives messages delayed.
 
+You will need 2 RP-Pico base on the RP2040 Chip and 2 MCP2515 to complete this example.
+Now connect the 2 MCP2515 via CAN Low and CAN High to make them speak to each others.
+
+![RP Picos with MCP2515s](./img/image.jpg)
+
 In the serial output you will see the received and sent message that are incremented by one
 in each exchange.
 
@@ -23,13 +28,10 @@ Sent Message: 400 Received Message: 406
 Sent Message: 401 Received Message: 407
 ```
 
-You will need 2 RP-Pico base on the RP2040 Chip and 2 MCP2515 to complete this example.
-Now connect the 2 MCP2515 via CAN Low and CAN High to make them speak to each others.
-
-![Logic Analyzer image](./img/logicanalyzer.jpg)
-
 Here the logic analyzer output is diplayed. The CAN Packets are displayed here.
 NOTE: The can_error message only appear because logic analyzer interprets them as such because the CAN protocol defines 5 bits sequentially send as high as an error.
+
+![Logic Analyzer image](./img/logicanalyzer.jpg)
 
 ## Building the driver
 
